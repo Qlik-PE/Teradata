@@ -1,240 +1,164 @@
-![](./media/image1.png)
+![logo](./media/image1.png)
 
-# **_Configuring Azure ADLS Gen2 with Qlik Data Integration Suite_**
+# **_Configuring Teradata 17.00 with Qlik Replicate_**
 
 ## **Partner Engineering**
 
+<br>  
 <br>
 <br>
 <br>
-<br>
 
-John Park<br>
-Principal Solution Architect<br>
-john.park@qlik.com<br>
-![](./media/image2.png)  
+John Park  
+Principal Solution Architect  
+john.park@qlik.com  
+![TDLogo](./media/image2.png)  
 
-**Version: 1.2**<br>
-**Initial Release Date: 17-Feb-20**
-
-
-
-
+**Version: 1.2**  
+**Initial Release Date: 7-May-20**
 **Revisions**      | **Notes**   | **Date**  | **Version**
 ------------------ | ----------- | --------- | -----------
-Initial Draft      | 20-Feb-2020 | John Park | 0.1         |
-Review of Language | 20-Feb-2020 | John Park | 0.2         |
-Final Edit for V1  | 21-Feb-2020 | John Park | 1.0         |
-Edits for Markdown | 25-Feb-2020 | John Park | 1.1         |
-Edits for Release  | 27-Feb-2020 | John Park | 1.2        |
+Initial Draft      | 20-Apr-2020 | John Park | 0.1         |
+Review of Language | 23-Apr-2020 | John Park | 0.2         |
+Final Edit for V1  | 4-May-2020 | John Park | 1.0         |
+Edits for Release  | 8-May-2020 | John Park | 1.2        |
 
 # Table of Contents
+
 --------------------
 
-[**Summary**](#summary)
+[**Summary**](#summary)  
 
-[**Configuring Azure Components**](#configuring-azure-components)
+[**Part 1 - Checklist - PreConfiguration**](#part-1)
 
-[**Part 1 - Create or Configure Azure Data Lake Storage (ADLS) Gen2**](#part-1---create-or-configure-azure-data-lake-storage-adls-gen2)
+[**Part 2 - Creating Source Connection**](#part-2)
 
-[**Part 2 - Create an Active Directory "App Registration"**](#part-2---create-an-active-directory-and-perform-app-registration)
+[**Part 3 - Creating Target Connections**](#part-3)
 
-[**Part 3 - Finalizing Configuration of the ADLS-2 Storage Account**](#part-3---finalizing-configuration-of-the-adls-2-storage-account)
-
-[**Part 4 - Create a Target Directory in the File System**](#part-4---create-a-target-directory-in-the-file-system)
+[**Part 4 - Testing and Additional Information**](#part-4)
 
 ## **Summary**
---------------
 
-This document was created to supplement Qlik Replicate and Qlik Compose Documentation. This guide is for customers intending to use Qlik Data Integration and Azure ADLS Gen2 and Azure Databricks. The official documentation can be found at
+This document was created to supplement Qlik Replicate and Teradata 17.00 Release Documentation from Following Pages
 
+- <https://docs.teradata.com/>
 - <https://help.qlik.com/en-US/compose/Content/Compose/Home.htm>
 
-- <https://help.qlik.com/en-US/replicate/Content/Replicate/Home.htm>
+Teradata is MPP Database that is supported by Qlik Replicate, Qlik Sense and QlikView 
 
-Azure ADLSv2 is foundation piece of Azure Technology and is the Object Store underpinning Azure Data Lake service.
+For This testing and guide we are using Qlik Replicate v6.5 and (TTU) Teradata Tools and Utilities 17.00
 
-Please see Official Documentation about ADLSv2 here:
+## **Part 1**
 
-- <https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction>
+### Checklist - PreConfiguration
 
-## **Configuring Azure Components**
+First, we need to set up have a Teradata Database Instance stood up and able to be reached.
+For this documentation we tested against installed versions of Teradata 17, 16.2 and 16.1.
 
-**High Level Overview**
+On your Windows or Linux box makes sure you have installed TTU and following components
 
-- Create or Configure Azure Data Lake Storage (ADLS) Gen2
+- Teradata Parallel Transporter API
+- Teradata Parallel Transporter Base  
+- ODBC Driver for Teradata
 
-- Create Azure Active Directory Application
+***For Best Experience and to leverage Teradata to Full Extent we suggest installing BETQ, FastExport, TPump.***
+  
+***Figure A.1.0.***  
+TTUList Screen Capture  
+![TTUList](./media/image3.jpeg) 
 
-- Create ADLS File System and Folder
+#### Install Qlik Replicate and make sure Replicate Server and Replicate UI Services are started
 
-### **Part 1 - Create or Configure Azure Data Lake Storage (ADLS) Gen2**
+In Windows Services the Services are Attunity Replicate Server and Attunity Replicate Server UI.(Qlik Acquired Attunity in 2019).
 
-First, we need to set up the Azure storage account that Qlik Replicate will use to map data into Azure Databricks. We will setup Azure Data Lake Storage (ADLS Gen2) to manage the external tables.
+Add Replicate Bin Location to Environment Path(Windows).
 
-If you do not already have an ADLS Gen2 storage account, we need to create one now. From your Azure portal home page, click on Storage Accounts.<br>
-***Figure A.1.0.***
+In Windows the path of default installation is C:\Program Files\Attunity\Replicate\bin.
 
-![](./media/image3.png)
+***Add "C:\Program Files\Attunity\Replicate\bin" to Enviroment Path.***
 
-Inside Storage Accounts click "+ Add".<br>
-***Figure A.1.1***
+***Figure A.1.1.***  
+Environment Settings  
+![Env](./media/image4.jpeg)
 
-![](./media/image4.png)
 
-Select your Azure subscription and an existing resource group or select "Add" to create a new storage account. Next choose a name for your storage account and a location. For "Account kind"be sure that it says Storage V2 (general purpose v2).Click "Next: Networking" at the bottom of the page. Make note of the name of the "Storage account name" on this page.
+***Figure A.1.2.***  
+Environment Variables  
+![TTUList](./media/image6.jpeg)
 
-> ***Refer to your IT Policies for Subscriptions and Resource Groups.***
 
-***Figure A.1.2***
+***Figure A.1.3.***  
+Environment Path  
+![TTUList](./media/image5.jpeg)
 
-![](./media/image5.png)
+**After the changes restart Qlik Repilcate.**
 
-For this setup we want to make Storage open to public, but you can change the setup to fit your organization needs. If Storage Account Network is configured with Private endpoints with Private virtual networks, make sure to add 2 subnets that Azure Databricks creates so Storage Account is accessible to Azure Databricks.
+## **Part 2**
 
-****Upon launching Azure Databricks, the service will create "Databricks-Private" and "Databricks-Public" subnets.****
+### Creating Source Connection
 
-***Figure A.1.3***
+Now we need to create an Create Qlik Replicate Connection for Teradata with appropriate settings.
 
-![](./media/image6.png)
+**Configure Teradata as a source in Connection Manager for Attunity.**
 
-Click "Next: Advanced" at the bottom of the page. On the Advanced tab, we want to be sure that Data Lake Storage Generation 2 _"Hierarchical namespace"_ is enabled.
+Click "Manage Endpoint Connections" and follwing window should popup.
 
-***Figure A.1.4.***
+Select "Source" as role and "Teradata" as Type.
 
-![](./media/image7.png)
+Enter Credentials for *Teradata Server*, *Username*, *Password*
 
-Configuration is complete. Press Review + create at the bottom of the page. Azure will validate what you have configured.
+**Do not Click "Browse" on *"Default Database"* now (We will Do that after Internal Parameters are set).**
 
-***Figure A.1.5.***
+Click  on **“Change Processing”** on Top Menu Bar and it should bring Internal Parameter Window
 
-![](./media/image8.jpg)
+Add Internal Driver for Teradata as Override. If you type keyword "driver" in the prompt is should allow you to click on the variable and add a value.
 
+***Following Setting were used for testing.***  
 
-Assuming your configuration passed the validation step, press “Create” button at the bottom of the page. It will take Azure a few minutes to create your storage account.
+- Parameter: driver  
+- Value: Teradata Database ODBC Driver 17.00
 
+***Press **"Browse"** button select Default database for Replicate and **"Test Connection"** button and Verify Connectivity.***
 
-### **Part 2 - Create an Active Directory and perform "App Registration"**
+## **Part 3**
 
-Now we need to create an Azure "App Registration" with appropriate permissions that Qlik Replicate will use when writing data to ADLSv2 storage. From the Azure portal home page, click on "Azure Active Directory".
+### Creating Target Connection
 
-***Figure A.2.0.***
+Now we need to create an Create Qlik Replicate Connection for Teradata with appropriate settings.
 
-![](./media/image9.png)
+**Configure Teradata as a source in Connection Manager for Attunity.**
 
-Click on "App registrations" on the left side of the screen.
+Click "Manage Endpoint Connections" and follwing window should popup.
 
-***Figure A.2.1.***
+Select "Target" as role and "Teradata" as Type.
 
-![](./media/image10.png)
+Enter Credentials for *Teradata Server*, *Username*, *Password*
 
-Select "App registrations" from side menu and click "_+ New registration"._
+**Do not Click "Browse" on *"Default Database"* now (We will Do that after Internal Parameters are set).**
 
-***Figure A.2.2***
+Click  on **“Advanced”** on Top Menu Bar and it should bring Internal Parameter Window
 
-![](./media/image11.png)
+Add Internal Driver for Teradata as Override. If you type keyword "driver" in the prompt is should allow you to click on the variable and add a value.
 
-Choose a name for your App and press "Register" at the bottom of the page. You do not need to enter anything for the "Redirect URI". It is optional and not required in our case.
+***Following Setting were used for testing.***  
 
-***Figure A.2.3***
+- Parameter: provider  
+- Value: Teradata Database ODBC Driver 17.00
 
-![](./media/image12.png)
+Qlik Replicate uses TPT Operator with Attribute which can be tweaked based on environment requirements.
 
-Registration is almost immediate. Make note of the location of the "Application (client) ID" and "Directory (tenant) ID" fields at the top of the page. You will need this information later when configuring Replicate.
+***Press **"Browse"** button select Default database for Replicate and **"Test Connection"** button and Verify Connectivity.***
 
-***Figure A.2.4***<br>
-![](./media/image13.png)
+## **Part 4**
 
-Next, we need to grant this application some basic permissions. Click on _API permissions_ on the left side of the page.
+### Testing and Additional Information
 
-***Figure A.2.5***<br>
-![](./media/image14.png) 
+If you fail in any of these steps please use the ODBC Manager built in with your os and test connections to your Teradata Server.
 
-Click "_+ Add permission"_ followed by _Azure Data Lake_ under "Microsoft APIs" on the right side of the screen.
+For Specific Qlik Replicate functions please follow replicate guidelines to setup and test CDC Tasks.
 
-***Figure A.2.6*** 
-![](./media/image15.jpeg)
+Additional information can be found in help documentation in [**Summary**](#summary).
 
-***Figure A.2.7***<br>
-![](./media/image16.png)
+For Testing Method Please contact your Qlik or Teradata Representatives for support from Professional services teams.
 
-From there, check "user_impersonation" under "Delegated permissions" and then press "Add permissions" button at the bottom of the page
-
-***Figure A.2.8***
-![](./media/image17.jpg)   
-
-Now we need to create a "secret" (essentially a password) for this API. Click on "Certificates & secrets" on the left side of the screen and click on "+ New client secret".***Figure A.2.9*** ![](./media/image18.jpg)
-
-Enter a description, choose an expiration, and press "_Add."_
-
-***Figure A.2.10***
-
-![](./media/image19.png)
-
-**IMPORTANT NOTE**: Make Note of value of "Secret" you generated. You must save the value of the secret you created before you leave this page. You will not be able to retrieve it again later.
-
-***Figure A.2.11***
-
-![](./media/image20.jpg)
-
-### **Part 3 - Finalizing Configuration of the ADLS-2 Storage Account**
-
-Now that we have created the Azure Active Directory App Registration, we need to return to the ADLS-2 storage account and finalize the configuration, so it is ready for use by Qlik Replicate. Return to the Azure Portal home page and then drill in to get back to the storage account we created. (Refer to Figure A1.3)
-
-First, we need to create a "Container" for us to use for the Qlik Replicate. Select "Containers" on the left side of the storage account screen.
-
-***Figure A.3.1***
-
-![](./media/image21.jpg)
-
-Inside your Storage account "+ Container" at the top of the page.
-
-***Figure A.3.2***
-
-![](./media/image22.png)
-
-Enter a name for the Container and press "OK" to save it.
-
-***Figure A.3.3***
-
-![](./media/image23.jpg)
-
-As a final step, we need to grant access to the storage account to the "App" that we created / registered previously. Click on "Access control (IAM)" on the left side of the page.
-
-***Figure A.3.4***
-
-![](./media/image24.jpg)
-
-Click on "Add a role assignment" on right.
-# Table of Contents# Table of Contents
-Once in the Screen on the right side of the screen select:
-
-- **_Role:_** Storage Blob Data Contributor
-
-- _Assign access to_: Azure AD user, group, or service principal
-
-- _Select_: enter the name of the App you registered previously. (***Figure A.2.4***)
-
-and press "Save" button at the bottom of the page.
-
-***Figure A.3.5***
-
-![](./media/image25.jpg)
-
-### **Part 4 - Create a Target Directory in the File System**
-
-To complete this part of the guide, you will need to create a target directory where Qlik Replicate will deliver data for the Databricks external tables.
-
-To get started, go to your ADLS-2 storage account and click on Storage Explorer (preview). This will download Storage Explorer application on your computer. Select Storage Accounts and select Blob Container created
-
-***Figure A.4.1***
-
-![](./media/image26.png)
-
-From there click on Blob Container Created and Add New Folders for Qlik Replicate (In this example we used "test" as folder name)
-
-***Figure A.4.2***
-
-![](./media/image27.jpg)
-
-In the next section we will configure Azure Databricks to make use of this storage and make it ready to ingest data delivered by Qlik Replicate.
+Othen Information can be found in [Qlik Community Technology Partners](https://community.qlik.com/t5/Technology-Partners-Ecosystem/ct-p/qlik-ecosystem "Qlik Technology Partner Eco System") in Technology Partner Sections where users can post questions and get them answered
