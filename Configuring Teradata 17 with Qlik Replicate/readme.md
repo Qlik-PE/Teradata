@@ -101,22 +101,43 @@ Now we need to create an Create Qlik Replicate Connection for Teradata with appr
 
 Click "Manage Endpoint Connections" and follwing window should popup.
 
-Select "Source" as role and "Teradata" as Type.
+***Figure A.2.0.***  
+Environment Path  
+![SourceConnection](./media/image8.jpeg)  
 
-Enter Credentials for *Teradata Server*, *Username*, *Password*
+Select "Target" as role and "Teradata" as Type.
 
-**Do not Click "Browse" on *"Default Database"* now (We will Do that after Internal Parameters are set).**
+Enter Credentials for *Teradata Server*, *Username*, *Password*.
 
-Click  on **“Change Processing”** on Top Menu Bar and it should bring Internal Parameter Window
+**Do not Click "Browse" on *"Default Database"* now (We will Do that after Internal Parameters are set).**  
+
+Click  on **“Change Processing”** on Top Menu Bar and it should bring Internal Parameter Window  
+
+Click on **"Internal Parameters"** button.  
+
+***Figure A.2.1.***  
+Environment Path  
+![SourceConnection](./media/image9.jpeg)  
 
 Add Internal Driver for Teradata as Override. If you type keyword "driver" in the prompt is should allow you to click on the variable and add a value.
 
 ***Following Setting were used for testing.***  
 
 - Parameter: driver  
-- Value: Teradata Database ODBC Driver 17.00
+- Value: Teradata Database ODBC Driver 17.00  
 
-***Press **"Browse"** button select Default database for Replicate and **"Test Connection"** button and Verify Connectivity.***
+Click on **"Settings Summary"** button.
+
+***Figure A.2.2.***  
+Environment Path  
+![SourceConnection](./media/image10.jpeg)  
+
+***Press **"Browse"** button select Default database for Replicate and **"Test Connection"** button and Verify Connectivity.***  
+
+***Figure A.2.0.***  
+Environment Path  
+![SourceConnection](./media/image11.jpeg)  
+Select "Source" as role and "Teradata" as Type.
 
 ## **Part 3**
 
