@@ -1,4 +1,4 @@
-# ***Qlik and Databricks***
+# ***Qlik and Teradata***
 
 This Repo Contains Documentation, Code, and Notes on Qlik Partnership with Teradata
 
@@ -7,12 +7,11 @@ John Park
 Principal Solution Architect  
 email: john.park@qlik.com  
 twitter: jpark328  
-github:https://github.com/Parkman328  
-linkedin: https://www.linkedin.com/in/jpark328/
+github: [repo](https://github.com/Parkman328 )  
+Linkedin [profile](https://www.linkedin.com/in/jpark328/)  
 
 ## Documnent List  
-
-[Configuring Qlik Replicate with Teradata 17](./Configuring Teradata 17 with Qlik Replicate/readme.md)  
+[Configuring Qlik Replicate with Teradata 17](./Configuring%20Teradata%2017%20with%20Qlik%20Replicate/readme.md)  
 
 ## Activity Log
 
