@@ -69,7 +69,7 @@ TTUList Screen Capture
 
 #### Install Qlik Replicate and make sure Replicate Server and Replicate UI Services are started
 
-In Windows Services the Services are Attunity Replicate Server and Attunity Replicate Server UI.(Qlik Acquired Attunity in 2019).
+In Windows Services the services names are Attunity Replicate Server and Attunity Replicate Server UI.(Qlik Acquired Attunity in 2019).
 
 Add Replicate Bin Location to Environment Path(Windows).
 
@@ -81,11 +81,9 @@ In Windows the path of default installation is C:\Program Files\Attunity\Replica
 Environment Settings  
 ![Env](./media/image4.jpeg)
 
-
 ***Figure A.1.2.***  
 Environment Variables  
 ![TTUList](./media/image6.jpeg)
-
 
 ***Figure A.1.3.***  
 Environment Path  
