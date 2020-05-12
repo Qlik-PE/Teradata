@@ -12,7 +12,7 @@ Linkedin [profile](https://www.linkedin.com/in/jpark328/)
 
 ## Documnent List  
 [Configuring Qlik Replicate with Teradata 17](./Configuring%20Teradata%2017%20with%20Qlik%20Replicate/readme.md)  
-[Configuring Qlik Replicate with Teradata 17 - Video](https://youtu.be/2QY1b4loqSA)
+[Configuring Qlik Replicate with Teradata 17 - Video](https://youtu.be/2QY1b4loqSA)  
 [Configuring Qlik Replicate with Teradata 17 PDF](./Configuring%20Teradata%2017%20with%20Qlik%20Replicate/readme.pdf)
 ## Activity Log
 
