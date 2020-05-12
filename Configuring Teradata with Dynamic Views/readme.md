@@ -1,6 +1,6 @@
 ![logo](./media/image1.png)
 
-# **_Configuring Teradata 17.00 with Qlik Replicate_**
+# **_Configuring Teradata 17.00 with Dynamic Views_**
 
 ## **Partner Engineering**
 
@@ -14,14 +14,12 @@ Principal Solution Architect
 john.park@qlik.com  
 ![TDLogo](./media/image2.png)  
 
-**Version: 1.2**  
+**Version: 1.0**  
 **Initial Release Date: 7-May-20**
 **Revisions**      | **Notes**   | **Date**  | **Version**
 ------------------ | ----------- | --------- | -----------
-Initial Draft      | 20-Apr-2020 | John Park | 0.1         |
-Review of Language | 23-Apr-2020 | John Park | 0.2         |
-Final Edit for V1  | 4-May-2020 | John Park | 1.0         |
-Edits for Release  | 8-May-2020 | John Park | 1.2        |
+Initial Draft      | 12-May-2020 | John Park | 1.0       |
+
 
 # Table of Contents
 
@@ -39,14 +37,14 @@ Edits for Release  | 8-May-2020 | John Park | 1.2        |
 
 ## **Summary**
 
-This document was created to supplement Qlik Replicate and Teradata 17.00 Release Documentation from Following Pages
+This document was created to supplement Qlik Sense Documentation and Teradata 17.00 Release Documentation from Following Pages
 
 - <https://docs.teradata.com/>
-- <https://help.qlik.com/en-US/compose/Content/Compose/Home.htm>
+- <https://help.qlik.com/en-US/sense>
 
 Teradata is MPP Database that is supported by Qlik Replicate, Qlik Sense and QlikView 
 
-For This testing and guide we are using Qlik Replicate v6.5 and (TTU) Teradata Tools and Utilities 17.00
+For This testing and guide we are using Qlik Sense April 2020 and (TTU) Teradata Tools and Utilities 17.00
 
 ## **Part 1**
 
@@ -56,93 +54,28 @@ First, we need to set up have a Teradata Database Instance stood up and able to 
 For this documentation we tested against installed versions of Teradata 17, 16.2 and 16.1.
 
 On your Windows or Linux box makes sure you have installed TTU and following components
-
-- Teradata Parallel Transporter API
-- Teradata Parallel Transporter Base  
+  
 - ODBC Driver for Teradata
 
-***For Best Experience and to leverage Teradata to Full Extent we suggest installing BETQ, FastExport, TPump.***
-  
 ***Figure A.1.0.***  
 TTUList Screen Capture  
 ![TTUList](./media/image3.jpeg) 
 
-#### Install Qlik Replicate and make sure Replicate Server and Replicate UI Services are started
-
-In Windows Services the services names are Attunity Replicate Server and Attunity Replicate Server UI.(Qlik Acquired Attunity in 2019).
-
-Add Replicate Bin Location to Environment Path(Windows).
-
-In Windows the path of default installation is C:\Program Files\Attunity\Replicate\bin.
-
-***Add "C:\Program Files\Attunity\Replicate\bin" to Enviroment Path.***
-
-***Figure A.1.1.***  
-Environment Settings  
-![Env](./media/image4.jpeg)
-
-***Figure A.1.2.***  
-Environment Variables  
-![TTUList](./media/image6.jpeg)
-
-***Figure A.1.3.***  
-Environment Path  
-![TTUList](./media/image5.jpeg)
-
-**After the changes restart Qlik Repilcate.**
+**Install Qlik Sense and make sure ODBC Connection can be created** 
 
 ## **Part 2**
 
 ### Creating Source Connection
 
-Now we need to create an Create Qlik Replicate Connection for Teradata with appropriate settings.
+Now we need to create an Create Qlik Source Connection for Teradata with appropriate settings.
 
-**Configure Teradata as a source in Connection Manager for Attunity.**
-
-Click "Manage Endpoint Connections" and following window should popup.
-
-***Figure A.2.0.***  
-Configure Source Connections   
-![SourceConnection](./media/image8.jpeg)  
-
-Select "Target" as role and "Teradata" as Type.
-
-Enter Credentials for *Teradata Server*, *Username*, *Password*.
-
-**Do not Click "Browse" on *"Default Database"* now (We will Do that after Internal Parameters are set).**  
-
-Click  on **“Change Processing”** on Top Menu Bar and it should bring Internal Parameter Window  
-
-Click on **"Internal Parameters"** button.  
-
-***Figure A.2.1.***  
-Set Driver Setting  
-![Driver Settings](./media/image9.jpeg)  
-
-Add Internal Driver for Teradata as Override. If you type keyword "driver" in the prompt is should allow you to click on the variable and add a value.
-
-***Following Setting were used for testing.***  
-
-- Parameter: driver  
-- Value: Teradata Database ODBC Driver 17.00  
-
-Click on **"Settings Summary"** button.
-
-***Figure A.2.2.***  
-View Internal Parameters  
-![Internal Parameters](./media/image10.jpeg)  
-
-***Press **"Browse"** button select Default database for Replicate and **"Test Connection"** button and Verify Connectivity.***  
-
-***Figure A.2.3.***  
-Confirm Source Connection  
-![Confirm Source Connections](./media/image11.jpeg)  
+**Configure Teradata as a source in Data Connection Manager for Qlik Sense.**
 
 ## **Part 3**
 
-### Creating Target Connection
+### Creating App with Dynamic Views Connection
 
-Now we need to create an Create Qlik Replicate Connection for Teradata with appropriate settings.
+Now we need to create an Create Qlik Sense App with Teradata Connection for Teradata with appropriate settings.
 
 **Configure Teradata as a source in Connection Manager for Attunity.**
 
