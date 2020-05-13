@@ -17,5 +17,5 @@ Linkedin [profile](https://www.linkedin.com/in/jpark328/)
 ## Activity Log
 
 May 8 2020 - Published to Qlik PE Repo
-May 10 2020 - Pubished PDF Version of Qlik PE Repo
+May 10 2020 - Pubished PDF Version of Qlik PE Repo  
 May 12 2020 - Video updloaded for Qlik Replicate and Teradata 17
