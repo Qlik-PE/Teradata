@@ -13,8 +13,8 @@ Linkedin [profile](https://www.linkedin.com/in/jpark328/)
 ## Document List  
 [Configuring Qlik Replicate with Teradata 17](./Configuring%20Teradata%2017%20with%20Qlik%20Replicate/readme.md)  
 [Configuring Qlik Replicate with Teradata 17 - Video](https://youtu.be/2QY1b4loqSA)  
-[Configuring Qlik Replicate with Teradata 17 PDF](./Configuring%20Teradata%2017%20with%20Qlik%20Replicate/readme.pdf)
-[Configuring Qlik Sense Dynamic Views with Teradata 17](./Configuring%20Teradata%2017%20with%20Qlik%20Replicate/readme.md)  ]
+[Configuring Qlik Replicate with Teradata 17 PDF](./Configuring%20Teradata%2017%20with%20Qlik%20Replicate/readme.pdf)  
+[Configuring Qlik Sense Dynamic Views with Teradata 17](./Configuring%20Teradata%2017%20with%20Qlik%20Replicate/readme.md)  
 ## Activity Log
 
 May 8 2020 - Published to Qlik PE Repo
